@@ -33,6 +33,10 @@ $(document).ready(function(){
         }
     }
 
+    grid[1][0] = 1;
+    grid[1][1] = 1;
+    grid[1][2] = 1;
+
     // Begin main loop
     drawGrid();
 });
@@ -54,15 +58,15 @@ function drawGrid(){
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
     // Draw grid
-    for (y=0; y<gridHeight-1; y++) {
-        for (x=0; x<gridWidth-1; x++) {
+    for (var y=0; y<gridHeight-1; y++) {
+        for (var x=0; x<gridWidth-1; x++) {
             // Draw border
             ctx.fillStyle = borderColour;
             ctx.fillRect(x*cellSize, y*cellSize, cellSize, cellSize);
             // Draw internal cell
             if (grid[x][y] == 0){ // 0 Represents dead, 1 represents live
                 ctx.fillStyle = deadColour;
-            }else {
+            }else{
                 ctx.fillStyle = liveColour;
             }
             
@@ -77,7 +81,49 @@ function drawGrid(){
 
 //Function to process game of life
 function simulateCycle(){ // it's the ciiiiircle of lifeee
-    
+    // Create backup of current grid before algorithm is performed
+    previousGrid = twoDimensionalArray(gridWidth, gridHeight);
+    for (y=0; y<gridHeight-1; y++) {
+        for (x=0; x<gridWidth-1; x++) {
+            previousGrid[x][y] = grid[x][y];
+        }
+    }
+
+    // Main loop
+    for (var y=0; y<gridHeight-1; y++) {
+        for (var x=0; x<gridWidth-1; x++) {
+            liveCellCount = 0; // How many live cells border the current cell
+            for (var i=y-1; i<y+2; i++) {
+                for (var j=x-1; j<x+2; j++) {
+                    if (inGrid(i, j) == true && !(i == y && j == x)) {
+                        if (previousGrid[i][j] == 1) {
+                            liveCellCount += 1;
+                        }
+                    }
+                }
+            }
+            if (previousGrid[x][y] == 1) { // If cell is currently alive
+                if (liveCellCount == 2 || liveCellCount == 3) {
+                    grid[x][y] = 1;
+                }else{
+                    grid[x][y] = 0;
+                }
+            }else{ // Is currently dead
+                if (liveCellCount == 3) {
+                    grid[x][y] = 1;
+                }
+            }
+        }
+    }
+}
+
+// Function to determine whether coordinate is within the grid
+function inGrid(x, y){
+    if (x<0 || y < 0 || x >= gridWidth || y >=gridHeight){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 // Function to create 2d Array
