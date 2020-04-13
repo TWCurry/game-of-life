@@ -1,0 +1,18 @@
+body{
+    font-family: Calibri;
+    background-color: black;
+    color: white;
+}
+h1{
+    text-shadow: 2px 2px 2px rgb(104, 104, 104);
+    height: 10%;
+    margin: 0;
+}
+#mainCanvas{
+    position: absolute;
+    border: 1px solid white;
+    width: calc(100% - 2px);
+    height: 90%;
+    margin: 0;
+    left: 0;
+}
