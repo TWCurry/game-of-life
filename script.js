@@ -26,6 +26,11 @@ $(document).ready(function(){
     console.log("Width: " + c.width + " gridWidth: " + gridWidth);
     console.log("Height: " + c.height + " gridHeight: " + gridHeight);
 
+    // Add event listener for mouse click
+    c.addEventListener('mousedown', function(e) {
+        handleMouseDown(c, e)
+    })
+
     // Reset grid to correct size
     grid = twoDimensionalArray(gridWidth, gridHeight);
 
@@ -157,10 +162,23 @@ function twoDimensionalArray(rows, columns) {
     return arr;
   }
 
-  function startStopSimulation(){
+  function startStopSimulation() {
       if (runSimulation == true) {
           runSimulation = false;
       }else{
           runSimulation = true;
       }
+  }
+
+  function handleMouseDown(canvas, event) {
+    rect = canvas.getBoundingClientRect();
+    x = event.clientX - rect.left;
+    y = event.clientY - rect.top;
+    gridX = ((Math.ceil(x / cellSize) * cellSize) / cellSize)-1;
+    gridY = ((Math.ceil(y / cellSize) * cellSize) / cellSize)-1;
+    if (grid[gridX][gridY] == 1){
+        grid[gridX][gridY] = 0;
+    }else {
+        grid[gridX][gridY] = 1;
+    }
   }
