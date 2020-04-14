@@ -18,3 +18,11 @@ h1{
     left: 0;
     background-color: black;
 }
+.titleButton{
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    position: relative;
+    bottom: 4px;
+}

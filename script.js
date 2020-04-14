@@ -9,6 +9,7 @@ borderColour = "#333333";
 cellBorderSize = 1;
 framesPerStep = 1; // Number of frames before updating the simulation
 frameNo = 1;
+runSimulation = true;
 
 
 // Init function
@@ -35,15 +36,14 @@ $(document).ready(function(){
         }
     }
 
-    grid[0][1] = 1;
-    grid[2][0] = 1;
-    grid[2][1] = 1;
-    grid[2][2] = 1;
-    grid[1][2] = 1;
-
-    grid[30][1] = 1;
-    grid[30][2] = 1;
-    grid[30][3] = 1;
+    // 'Acorn' pattern (has lots of iterations)
+    grid[101][43] = 1;
+    grid[102][41] = 1;
+    grid[102][43] = 1;
+    grid[104][42] = 1;
+    grid[105][43] = 1;
+    grid[106][43] = 1;
+    grid[107][43] = 1;
 
     // Begin main loop
     drawGrid();
@@ -53,7 +53,9 @@ $(document).ready(function(){
 function drawGrid(){
     if (frameNo == framesPerStep) {
         // Run algorithm
-        simulateCycle()
+        if (runSimulation == true) {
+            simulateCycle()
+        }
         frameNo = 1;
     }else{
         frameNo ++;
@@ -153,4 +155,12 @@ function twoDimensionalArray(rows, columns) {
     }
   
     return arr;
+  }
+
+  function startStopSimulation(){
+      if (runSimulation == true) {
+          runSimulation = false;
+      }else{
+          runSimulation = true;
+      }
   }
