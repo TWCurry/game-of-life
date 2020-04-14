@@ -2,11 +2,13 @@
 grid = twoDimensionalArray(10, 10);
 gridHeight = 10;
 gridWidth = 10;
-cellSize = 20;
-liveColour = "#FFFFFF"
-deadColour = "#000000"
-borderColour = "#333333"
-cellBorderSize = 1
+cellSize = 10;
+liveColour = "#FFFFFF";
+deadColour = "#000000";
+borderColour = "#333333";
+cellBorderSize = 1;
+framesPerStep = 1; // Number of frames before updating the simulation
+frameNo = 1;
 
 
 // Init function
@@ -33,9 +35,15 @@ $(document).ready(function(){
         }
     }
 
-    grid[1][0] = 1;
-    grid[1][1] = 1;
+    grid[0][1] = 1;
+    grid[2][0] = 1;
+    grid[2][1] = 1;
+    grid[2][2] = 1;
     grid[1][2] = 1;
+
+    grid[30][1] = 1;
+    grid[30][2] = 1;
+    grid[30][3] = 1;
 
     // Begin main loop
     drawGrid();
@@ -43,8 +51,13 @@ $(document).ready(function(){
 
 
 function drawGrid(){
-    // Run algorithm
-    simulateCycle()
+    if (frameNo == framesPerStep) {
+        // Run algorithm
+        simulateCycle()
+        frameNo = 1;
+    }else{
+        frameNo ++;
+    }
     
     // Create context
     var c = document.getElementById("mainCanvas");
@@ -90,12 +103,12 @@ function simulateCycle(){ // it's the ciiiiircle of lifeee
     }
 
     // Main loop
-    for (var y=0; y<gridHeight-1; y++) {
-        for (var x=0; x<gridWidth-1; x++) {
+    for (var x=0; x<gridWidth-1; x++) {
+        for (var y=0; y<gridHeight-1; y++) {
             liveCellCount = 0; // How many live cells border the current cell
-            for (var i=y-1; i<y+2; i++) {
-                for (var j=x-1; j<x+2; j++) {
-                    if (inGrid(i, j) == true && !(i == y && j == x)) {
+            for (var i=x-1; i<x+2; i++) {
+                for (var j=y-1; j<y+2; j++) {
+                    if (inGrid(i, j) == true && !(i == x && j == y)) {
                         if (previousGrid[i][j] == 1) {
                             liveCellCount += 1;
                         }
