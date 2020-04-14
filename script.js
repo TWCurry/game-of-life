@@ -9,7 +9,7 @@ borderColour = "#333333";
 cellBorderSize = 1;
 framesPerStep = 1; // Number of frames before updating the simulation
 frameNo = 1;
-runSimulation = true;
+runSimulation = false;
 
 
 // Init function
@@ -40,15 +40,6 @@ $(document).ready(function(){
             grid[x][y] = 0; // 0 Represents dead, 1 represents live
         }
     }
-
-    // 'Acorn' pattern (has lots of iterations)
-    grid[101][43] = 1;
-    grid[102][41] = 1;
-    grid[102][43] = 1;
-    grid[104][42] = 1;
-    grid[105][43] = 1;
-    grid[106][43] = 1;
-    grid[107][43] = 1;
 
     // Begin main loop
     drawGrid();
@@ -181,4 +172,15 @@ function twoDimensionalArray(rows, columns) {
     }else {
         grid[gridX][gridY] = 1;
     }
+  }
+
+  function spawnAcorn(){
+    // 'Acorn' pattern (has lots of iterations)
+    grid[101][43] = 1;
+    grid[102][41] = 1;
+    grid[102][43] = 1;
+    grid[104][42] = 1;
+    grid[105][43] = 1;
+    grid[106][43] = 1;
+    grid[107][43] = 1;
   }
